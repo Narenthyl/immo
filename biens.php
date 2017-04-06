@@ -12,7 +12,7 @@
     <?php include 'navbar.php';include 'configuration.php'; include 'pdo.php'; ?>
     <div class="container"> <!-- Contient toute la page -->
         <?php
-        echo '<h1>Liste des biens'.$nbbiens['nb'].'</h1><br/>';
+        echo '<h1>Liste des biens ('.$nbbiens['count'].')</h1><br/>';
         echo '<table class="table table-stripped">
                     <tr>
                         <th>Adresse</th>
@@ -25,7 +25,13 @@
                         </tr>';
         foreach ($biens as $bie){
             echo "<tr>";
-            echo "<td>".$bie['adresse1'].' '.$bie['adresse2']."</td><td>".$bie['codepostal']."</td><td>".$bie['nomville']."</td><td>".$bie['pieces']."</td><td>".$bie['intituletransaction']."</td><td>".$bie['intitulebien']."</td><td>".$bie['montant']."</td>";
+            echo "<td>".$bie['adresse1'].' '.$bie['adresse2']."</td><td>".$bie['codepostal']."</td><td>".$bie['nomville']."</td>";
+            if ($bie['pieces'] <= 2){
+                echo "<td><span class=\"label label-default\">".$bie['pieces']."</span></td>";
+            }else{
+                echo "<td><span class=\"label label-success\">".$bie['pieces']."</span></td>";
+            }
+            echo "<td>".$bie['intituletransaction']."</td><td>".$bie['intitulebien']."</td><td>".$bie['montant']."</td>";
             echo "</tr>";
         }
         echo '</table>';

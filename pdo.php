@@ -47,9 +47,36 @@ include 'configuration.php';
      //Extraction données
     $biens = $requete->fetchAll();
 
-    $sql = "SELECT count(*) AS nb FROM offres.biens";
+    $sql = "SELECT count(*) as count FROM offres.biens";
     $requete =  $pdo->query($sql);
-    $nbbiens = $requete->fetchAll();
+    $nbbiens = $requete->fetch();
+
+
+    //select propriétaire
+    function selectproprio($idp)
+    {
+        global $pdo;//rend la variable globale
+        $sql1="SELECT * FROM offres.proprietaires WHERE numeroproprietaire=".$idp.";";
+        $requete1 = $pdo->query($sql1);
+        return $requete1->fetch();
+    }
+
+    function selectbienproprio($idp)
+    {
+        global $pdo;//rend la variable globale
+        $sql1="SELECT * 
+            FROM offres.biens b 
+            INNER JOIN offres.villes v
+            ON v.codeville = b.codeville
+            INNER JOIN offres.typestransactions tt
+            ON tt.codetransaction = b.codetransaction
+            INNER JOIN offres.typesbiens tb
+            ON tb.codebien = b.codebien
+            WHERE numeroproprietaire =".$idp."
+            ORDER BY montant DESC";
+        $requete1 = $pdo->query($sql1);
+        return $requete1->fetchAll();
+    }
 
     //Parcourir les proprietaires et les afficher
    /* foreach ($proprietaires as $pro){

@@ -23,7 +23,7 @@
                         </tr>';
         foreach ($proprietaires as $pro){
             echo "<tr>";
-            echo "<td>".$pro['nomproprietaire']."</td><td>".$pro['prenomproprietaire']."</td><td>".$pro['titre']."</td><td>".$pro['telephonemobile']."</td><td>".$pro['telephonepersonnel']."</td>";
+            echo '<td><a href="ficheproprietaire.php?id='.$pro['numeroproprietaire'].'">'.$pro['nomproprietaire'].'</a></td><td>'.$pro['prenomproprietaire'].'</td><td>'.$pro['titre'].'</td><td>'.$pro['telephonemobile'].'</td><td>'.$pro['telephonepersonnel'].'</td>';
             echo "</tr>";
         }
         echo '</table>';
