@@ -32,7 +32,12 @@ include 'configuration.php';
     $proprietaires = $requete->fetchAll();
 
     //liste des biens
-    $sql = "SELECT * FROM "
+    $sql = "SELECT * FROM offres.biens";
+
+    //Creer requete
+    $requete = $pdo->query($sql);
+     //Extraction données
+    $biens = $requete->fetchAll();
 
     //Parcourir les proprietaires et les afficher
    /* foreach ($proprietaires as $pro){
