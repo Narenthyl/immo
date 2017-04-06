@@ -9,11 +9,27 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-    <?php include 'navbar.php';include 'configuration.php'; include 'pdo.php'; ?>
+    <?php include 'navbar.php';include 'configuration.php'; include 'pdo.php';
+        $transaction = intval($_GET['transaction']);
+        $typebien = intval($_GET['type']);
+        $biens2 = selectbiens($transaction, $typebien);
+    ?>
     <div class="container"> <!-- Contient toute la page -->
         <?php
-        echo '<h1>Liste des biens ('.$nbbiens['count'].')</h1><br/>';
+        echo '<h1>Liste des biens ('.count($biens2).')</h1><br/>';
+
+
+
         echo '<table class="table table-stripped">
+                    <tr><a href="biens.php"><span class="label label-default">Tout afficher</a></span></a>
+       <a href="biens.php?transaction=LOC"><span class="label label-primary">Location</span></a>
+        <a href="biens.php?transaction=VEN"><span class="label label-primary">Vente</span></a>
+       <a href="biens.php?type=APP"> <span class="label label-info">Appartement</span></a>
+       <a href="biens.php?type=BUR"><span class="label label-info">Bureau</span></a>
+        <a href="biens.php?type=FND"><span class="label label-info">Fonds de commerce</span></a>
+       <a href="biens.php?type=MAI"> <span class="label label-info">Maison</span></a>
+      <a href="biens.php?type=TER"> <span class="label label-info">Terrain</span></a>
+       </tr>
                     <tr>
                         <th>Adresse</th>
                         <th>Code Postal</th>
@@ -23,7 +39,7 @@
                         <th>Type de bien</th>
                         <th>Montant</th>
                         </tr>';
-        foreach ($biens as $bie){
+        foreach ($biens2 as $bie){
             echo "<tr>";
             echo "<td>".$bie['adresse1'].' '.$bie['adresse2']."</td><td>".$bie['codepostal']."</td><td>".$bie['nomville']."</td>";
             if ($bie['pieces'] <= 2){

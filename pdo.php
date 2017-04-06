@@ -47,11 +47,23 @@ include 'configuration.php';
      //Extraction données
     $biens = $requete->fetchAll();
 
-    $sql = "SELECT count(*) as count FROM offres.biens";
-    $requete =  $pdo->query($sql);
-    $nbbiens = $requete->fetch();
 
-
+    function selectbiens($transaction, $type)
+    {
+        global $pdo;//rend la variable globale
+        $sql1="SELECT * 
+            FROM offres.biens b 
+            INNER JOIN offres.villes v
+            ON v.codeville = b.codeville
+            INNER JOIN offres.typestransactions tt
+            ON tt.codetransaction = b.codetransaction
+            INNER JOIN offres.typesbiens tb
+            ON tb.codebien = b.codebien
+            WHERE b.codetransaction =".$transaction." AND codebien =".$type."
+            ORDER BY montant DESC";
+        $requete1 = $pdo->query($sql1);
+        return $requete1->fetch();
+    }
     //select propriétaire
     function selectproprio($idp)
     {
