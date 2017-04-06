@@ -32,12 +32,24 @@ include 'configuration.php';
     $proprietaires = $requete->fetchAll();
 
     //liste des biens
-    $sql = "SELECT * FROM offres.biens";
+    $sql = "SELECT * 
+            FROM offres.biens b 
+            INNER JOIN offres.villes v
+            ON v.codeville = b.codeville
+            INNER JOIN offres.typestransactions tt
+            ON tt.codetransaction = b.codetransaction
+            INNER JOIN offres.typesbiens tb
+            ON tb.codebien = b.codebien
+            ORDER BY montant DESC";
 
     //Creer requete
     $requete = $pdo->query($sql);
      //Extraction données
     $biens = $requete->fetchAll();
+
+    $sql = "SELECT count(*) AS nb FROM offres.biens";
+    $requete =  $pdo->query($sql);
+    $nbbiens = $requete->fetchAll();
 
     //Parcourir les proprietaires et les afficher
    /* foreach ($proprietaires as $pro){

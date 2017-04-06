@@ -9,11 +9,27 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<?php include 'navbar.php'; ?>
-<div class="container"> <!-- Contient toute la page -->
-    <div class="jumbotron">
-        <h1>Page en construction</h1>
-    </div>
+    <?php include 'navbar.php';include 'configuration.php'; include 'pdo.php'; ?>
+    <div class="container"> <!-- Contient toute la page -->
+        <?php
+        echo '<h1>Liste des biens'.$nbbiens['nb'].'</h1><br/>';
+        echo '<table class="table table-stripped">
+                    <tr>
+                        <th>Adresse</th>
+                        <th>Code Postal</th>
+                        <th>Ville</th>
+                        <th>Pièces</th>
+                        <th>Transaction</th>
+                        <th>Type de bien</th>
+                        <th>Montant</th>
+                        </tr>';
+        foreach ($biens as $bie){
+            echo "<tr>";
+            echo "<td>".$bie['adresse1'].' '.$bie['adresse2']."</td><td>".$bie['codepostal']."</td><td>".$bie['nomville']."</td><td>".$bie['pieces']."</td><td>".$bie['intituletransaction']."</td><td>".$bie['intitulebien']."</td><td>".$bie['montant']."</td>";
+            echo "</tr>";
+        }
+        echo '</table>';
+        ?>
 </div>
 </body>
 </html>
