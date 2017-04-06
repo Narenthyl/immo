@@ -5,5 +5,5 @@ $config = array (
     'database' => 'immo',
     'port' => 5432,
     'user' => 'postgres',
-    'password' => 'password'
+    'password' => 'root'
 );

@@ -1,22 +1,22 @@
 <?php
-include 'header.php';
+//include 'header.php';
 include 'configuration.php';
 ?>
 
 <?php
 
     //la chaine de connexion (le DSN)
-    $dsn="pgsql:host=localhost;dbname=immo;port:5432;";
+    $dsn="pgsql:host=localhost;dbname=immo;port=5432;";
 
     //même chose avec la variable $config
-    $dsn = "pgsql:host={$config['host']};dbname={$config['database']};port={$config['port']};";
+   // $dsn = "pgsql:host={$config['host']};dbname={$config['database']};port={$config['port']};";
 
     // Une autre variante
-    $dsn = sprintf("pgsql:host=%s;dbname=%s;port=%d",
+  /*  $dsn = sprintf("pgsql:host=%s;dbname=%s;port=%d",
         $config['host'],
         $config['database'],
         $config['port']
-    );
+    );*/
 
     //on créé un objet pdo
     $pdo = new PDO($dsn, $config['user'], $config['password']);
@@ -31,8 +31,11 @@ include 'configuration.php';
     //Extraire les données - V1
     $proprietaires = $requete->fetchAll();
 
+    //liste des biens
+    $sql = "SELECT * FROM "
+
     //Parcourir les proprietaires et les afficher
-    foreach ($proprietaires as $pro){
+   /* foreach ($proprietaires as $pro){
         echo $pro['nomproprietaire'];
         echo '<br>';
     }
@@ -44,7 +47,7 @@ include 'configuration.php';
     foreach ($proprietaires as $pro){
         echo $pro->nomproprietaire;
         echo '<br>';
-    }
+    }*/
 ?>
 
 

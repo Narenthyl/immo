@@ -9,11 +9,11 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-    <?php include 'navbar.php';include 'configuration.php'; ?>
+    <?php include 'navbar.php';include 'configuration.php'; include 'pdo.php'; ?>
     <div class="container"> <!-- Contient toute la page -->
         <?php
             echo '<h1>Liste des propriétaires</h1><br/>';
-            echo '<table>
+            echo '<table class="table table-stripped">
                     <tr>
                         <th>Nom</th>
                         <th>Prénom</th>
@@ -21,7 +21,12 @@
                         <th>Mobile</th>
                         <th>Téléphone perso.</th>
                         </tr>';
-cul
+        foreach ($proprietaires as $pro){
+            echo "<tr>";
+            echo "<td>".$pro['nomproprietaire']."</td><td>".$pro['prenomproprietaire']."</td><td>".$pro['titre']."</td><td>".$pro['telephonemobile']."</td><td>".$pro['telephonepersonnel']."</td>";
+            echo "</tr>";
+        }
+        echo '</table>';
         ?>
     </div>
 </body>
