@@ -31,6 +31,12 @@ include 'configuration.php';
     //Extraire les données - V1
     $proprietaires = $requete->fetchAll();
 
+    function selectProprietairesPage($limit, $offset){
+        global $pdo;//rend la variable globale
+        $sql = 'SELECT * FROM offres.proprietaires LIMIT '.$limit.' OFFSET ' .$offset.';';
+        $requete = $pdo->query($sql);
+        return $requete->fetchAll();
+    }
     //liste des biens
     $sql = "SELECT * 
             FROM offres.biens b 
