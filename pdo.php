@@ -47,8 +47,8 @@ include 'configuration.php';
      //Extraction données
     $biens = $requete->fetchAll();
 
-
-    function selectbiens($transaction, $type)
+//diverses fonctions pour selectionner des biens selon le filtre choisi
+    function selectbiens3($transaction, $type)
     {
         global $pdo;//rend la variable globale
         $sql1="SELECT * 
@@ -59,10 +59,60 @@ include 'configuration.php';
             ON tt.codetransaction = b.codetransaction
             INNER JOIN offres.typesbiens tb
             ON tb.codebien = b.codebien
-            WHERE b.codetransaction =".$transaction." AND codebien =".$type."
+            WHERE b.codetransaction='".$transaction."' AND b.codebien ='".$type."' 
             ORDER BY montant DESC";
         $requete1 = $pdo->query($sql1);
-        return $requete1->fetch();
+        return $requete1->fetchAll();
+    }
+
+    function selectbiens()
+    {
+        global $pdo;//rend la variable globale
+        $sql1="SELECT * 
+                FROM offres.biens b 
+                INNER JOIN offres.villes v
+                ON v.codeville = b.codeville
+                INNER JOIN offres.typestransactions tt
+                ON tt.codetransaction = b.codetransaction
+                INNER JOIN offres.typesbiens tb
+                ON tb.codebien = b.codebien
+                ORDER BY montant DESC";
+        $requete1 = $pdo->query($sql1);
+        return $requete1->fetchAll();
+    }
+
+    function selectbiens1($transaction)
+    {
+        global $pdo;//rend la variable globale
+        $sql1="SELECT * 
+                    FROM offres.biens b 
+                    INNER JOIN offres.villes v
+                    ON v.codeville = b.codeville
+                    INNER JOIN offres.typestransactions tt
+                    ON tt.codetransaction = b.codetransaction
+                    INNER JOIN offres.typesbiens tb
+                    ON tb.codebien = b.codebien
+                    WHERE b.codetransaction='".$transaction."'
+                    ORDER BY montant DESC";
+        $requete1 = $pdo->query($sql1);
+        return $requete1->fetchAll();
+    }
+
+    function selectbiens2($type)
+    {
+        global $pdo;//rend la variable globale
+        $sql1="SELECT * 
+                    FROM offres.biens b 
+                    INNER JOIN offres.villes v
+                    ON v.codeville = b.codeville
+                    INNER JOIN offres.typestransactions tt
+                    ON tt.codetransaction = b.codetransaction
+                    INNER JOIN offres.typesbiens tb
+                    ON tb.codebien = b.codebien
+                    WHERE b.codebien ='".$type."' 
+                    ORDER BY montant DESC";
+        $requete1 = $pdo->query($sql1);
+        return $requete1->fetchAll();
     }
     //select propriétaire
     function selectproprio($idp)

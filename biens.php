@@ -10,9 +10,20 @@
 </head>
 <body>
     <?php include 'navbar.php';include 'configuration.php'; include 'pdo.php';
-        $transaction = intval($_GET['transaction']);
-        $typebien = intval($_GET['type']);
-        $biens2 = selectbiens($transaction, $typebien);
+        $transaction = null;
+        $typebien = null;
+
+        if (isset($_GET['transaction']) and isset($_GET['type'])){
+            $biens2 = selectbiens3($transaction, $typebien);
+        }elseif (isset($_GET['transaction'])){
+            $biens2 = selectbiens1($_GET['transaction']);
+        }elseif (isset($_GET['type'])){
+            $biens2 = selectbiens2($_GET['type']);
+        }else{
+            $biens2 = selectbiens();
+        }
+
+
     ?>
     <div class="container"> <!-- Contient toute la page -->
         <?php
@@ -41,7 +52,7 @@
                         </tr>';
         foreach ($biens2 as $bie){
             echo "<tr>";
-            echo "<td>".$bie['adresse1'].' '.$bie['adresse2']."</td><td>".$bie['codepostal']."</td><td>".$bie['nomville']."</td>";
+            echo "<td>".$bie['adresse1']." ".$bie['adresse2']."</td><td>".$bie['codepostal']."</td><td>".$bie['nomville']."</td>";
             if ($bie['pieces'] <= 2){
                 echo "<td><span class=\"label label-default\">".$bie['pieces']."</span></td>";
             }else{
