@@ -71,10 +71,11 @@ include 'configuration.php';
         return $requete1->fetchAll();
     }
 
-    function selectbiens()
+    function selectbiens($page)
     {
-        global $pdo;//rend la variable globale
-        $sql1="SELECT * 
+        if ($page<=0){
+            global $pdo;//rend la variable globale
+            $sql1="SELECT * 
                 FROM offres.biens b 
                 INNER JOIN offres.villes v
                 ON v.codeville = b.codeville
@@ -83,14 +84,31 @@ include 'configuration.php';
                 INNER JOIN offres.typesbiens tb
                 ON tb.codebien = b.codebien
                 ORDER BY montant DESC";
-        $requete1 = $pdo->query($sql1);
-        return $requete1->fetchAll();
+            $requete1 = $pdo->query($sql1);
+            return $requete1->fetchAll();
+        }else {
+            global $pdo;//rend la variable globale
+            $sql1="SELECT * 
+                FROM offres.biens b 
+                INNER JOIN offres.villes v
+                ON v.codeville = b.codeville
+                INNER JOIN offres.typestransactions tt
+                ON tt.codetransaction = b.codetransaction
+                INNER JOIN offres.typesbiens tb
+                ON tb.codebien = b.codebien
+                ORDER BY montant DESC
+                LIMIT 10 OFFSET ".(($page-1)*10).";";
+            $requete1 = $pdo->query($sql1);
+            return $requete1->fetchAll();
+        }
+
     }
 
-    function selectbiens1($transaction)
+    function selectbiens1($transaction, $page)
     {
-        global $pdo;//rend la variable globale
-        $sql1="SELECT * 
+        if ($page <=0){
+            global $pdo;//rend la variable globale
+            $sql1="SELECT * 
                     FROM offres.biens b 
                     INNER JOIN offres.villes v
                     ON v.codeville = b.codeville
@@ -100,14 +118,33 @@ include 'configuration.php';
                     ON tb.codebien = b.codebien
                     WHERE b.codetransaction='".$transaction."'
                     ORDER BY montant DESC";
-        $requete1 = $pdo->query($sql1);
-        return $requete1->fetchAll();
+            $requete1 = $pdo->query($sql1);
+            return $requete1->fetchAll();
+        }else{
+            global $pdo;//rend la variable globale
+            $sql1="SELECT * 
+                    FROM offres.biens b 
+                    INNER JOIN offres.villes v
+                    ON v.codeville = b.codeville
+                    INNER JOIN offres.typestransactions tt
+                    ON tt.codetransaction = b.codetransaction
+                    INNER JOIN offres.typesbiens tb
+                    ON tb.codebien = b.codebien
+                    WHERE b.codetransaction='".$transaction."'
+                    ORDER BY montant DESC
+                    LIMIT 10 OFFSET ".(($page-1)*10).";";
+            $requete1 = $pdo->query($sql1);
+            return $requete1->fetchAll();
+        }
+
     }
 
-    function selectbiens2($type)
+    function selectbiens2($type, $page)
     {
-        global $pdo;//rend la variable globale
-        $sql1="SELECT * 
+
+        if ($page <=0){
+            global $pdo;//rend la variable globale
+            $sql1="SELECT * 
                     FROM offres.biens b 
                     INNER JOIN offres.villes v
                     ON v.codeville = b.codeville
@@ -117,8 +154,25 @@ include 'configuration.php';
                     ON tb.codebien = b.codebien
                     WHERE b.codebien ='".$type."' 
                     ORDER BY montant DESC";
-        $requete1 = $pdo->query($sql1);
-        return $requete1->fetchAll();
+            $requete1 = $pdo->query($sql1);
+            return $requete1->fetchAll();
+        }else{
+            global $pdo;//rend la variable globale
+            $sql1="SELECT * 
+                    FROM offres.biens b 
+                    INNER JOIN offres.villes v
+                    ON v.codeville = b.codeville
+                    INNER JOIN offres.typestransactions tt
+                    ON tt.codetransaction = b.codetransaction
+                    INNER JOIN offres.typesbiens tb
+                    ON tb.codebien = b.codebien
+                    WHERE b.codebien ='".$type."' 
+                    ORDER BY montant DESC
+                    LIMIT 10 OFFSET ".(($page-1)*10).";";
+            $requete1 = $pdo->query($sql1);
+            return $requete1->fetchAll();
+        }
+
     }
     //select propriétaire
     function selectproprio($idp)

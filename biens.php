@@ -16,18 +16,35 @@
         if (isset($_GET['transaction']) and isset($_GET['type'])){
             $biens2 = selectbiens3($transaction, $typebien);
         }elseif (isset($_GET['transaction'])){
-            $biens2 = selectbiens1($_GET['transaction']);
+            $count = selectbiens1($_GET['transaction'],0);//l'argument 0 renvoie la requete complète
+            if (isset($_GET['page'])){
+                $biens2 = selectbiens1($_GET['transaction'],$_GET['page']);
+            }else{
+                $biens2 = selectbiens(1);
+            }
+
         }elseif (isset($_GET['type'])){
-            $biens2 = selectbiens2($_GET['type']);
+            $count = selectbiens2($_GET['type'],0);//l'argument 0 renvoie la requete complète
+            if (isset($_GET['page'])){
+                $biens2 = selectbiens2($_GET['type'], $_GET['page']);
+            }else{
+                $biens2 = selectbiens2($_GET['type'],1);
+            }
         }else{
-            $biens2 = selectbiens();
+            $count = selectbiens(0);//l'argument 0 renvoie la requete complète
+            if (isset($_GET['page'])){
+                $biens2 = selectbiens($_GET['page']);
+            }else{
+                $biens2 = selectbiens(1);
+            }
+
         }
 
 
     ?>
     <div class="container"> <!-- Contient toute la page -->
         <?php
-        echo '<h1>Liste des biens ('.count($biens2).')</h1><br/>';
+        echo '<h1>Liste des biens ('.count($count).')</h1><br/>';
 
 
 
@@ -66,12 +83,14 @@
         //pagination
         echo '<nav aria-label="Page navigation">
   <ul class="pagination">';
-        if (count($biens2)> 10){//Si il y a plus de 10 row affiche des liens pour les nuémros de pages en fonction des filtres
-            for ($i = 1; $i < count($biens2)/10+1; $i++){
+        if (count($count)> 10){//Si il y a plus de 10 row affiche des liens pour les nuémros de pages en fonction des filtres
+            for ($i = 1; $i < count($count)/10+1; $i++){
                 if (isset($_GET['transaction'])) {
                     echo '  <li><a href="biens.php?transaction=' . $_GET['transaction'] . '&page=' . $i . '">' . $i . '</a></li>';
                 }elseif (isset($_GET['type'])){
                     echo '  <li><a href="biens.php?type='.$_GET['type'].'&page=' . $i . '">' . $i . '</a></li>';
+                }else{
+                    echo '  <li><a href="biens.php?page=' . $i . '">' . $i . '</a></li>';
                 }
             }
 
