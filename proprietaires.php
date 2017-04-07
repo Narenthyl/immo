@@ -36,9 +36,10 @@ if (isset($_GET['page'])){
         echo "</tr>";
     }
     echo '</table>';
+    //pagination
     echo '<nav aria-label="Page navigation">
   <ul class="pagination">';
-    for ($i = 1; $i < 5; $i++){
+    for ($i = 1; $i < count($proprietaires)/10+1; $i++){
         echo '  <li><a href="proprietaires.php?page=' . $i . '">' . $i . '</a></li>';
         }
 

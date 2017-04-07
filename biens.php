@@ -62,6 +62,22 @@
             echo "</tr>";
         }
         echo '</table>';
+
+        //pagination
+        echo '<nav aria-label="Page navigation">
+  <ul class="pagination">';
+        if (count($biens2)> 10){//Si il y a plus de 10 row affiche des liens pour les nuémros de pages en fonction des filtres
+            for ($i = 1; $i < count($biens2)/10+1; $i++){
+                if (isset($_GET['transaction'])) {
+                    echo '  <li><a href="biens.php?transaction=' . $_GET['transaction'] . '&page=' . $i . '">' . $i . '</a></li>';
+                }elseif (isset($_GET['type'])){
+                    echo '  <li><a href="biens.php?type='.$_GET['type'].'&page=' . $i . '">' . $i . '</a></li>';
+                }
+            }
+
+            echo '  </ul></nav>';
+        }
+
         ?>
 </div>
 </body>
